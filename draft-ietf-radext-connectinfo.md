@@ -1,8 +1,8 @@
 ---
 title: A syntax for the RADIUS Connect-Info attribute used in Wi-Fi networks
 abbrev: Connect-Info
-docname: draft-ietf-radext-connectinfo-00
-date: 2026-09-24
+docname: draft-ietf-radext-connectinfo-02
+date: 2026-11-02
 category: info
 submissiontype: IETF
 
@@ -42,15 +42,14 @@ author:
   email: j.redmore@cablelabs.com
 
 contributor:
+
 -
   ins: S. Gundavelli
   name: Sri Gundavelli
-  organization: Cisco Systems
-  street: 170 West Tasman Drive
-  city: San Jose
-  code: 95134
+  organization: Ameriband
+  code: 95135
   country: US
-  email: sgundave@cisco.com
+  email: sri.ietf@gmail.com
 
 -
   ins: B. Tomas
@@ -230,13 +229,20 @@ Types of Connect-Info Metrics {#Types}
 ===============
 
 The characteristics associated with the IEEE 802.11 connection
-that can be shared between NAS and RADIUS server include those that can be used to derive
-a quality metric of the performance of a Wi-Fi network. These are:
+that can be shared between the NAS and the RADIUS server include parameters
+that define the operational context of the connection, as well as those that
+can be used to derive a quality metric of the network performance.
+
+The dynamic performance metrics linked to a specific IEEE 802.11 connection are:
 
 * transmit and receive bit rates,
 * received signal strength indicator (RSSI),
-* frame loss rate,
-* frame retry rate, and
+* frame loss rate, and
+* frame retry rate.
+
+In addition to these performance metrics, the Connect-Info attribute can signal
+the operational context of an IEEE 802.11 connection, including:
+
 * the Wi-Fi global operating class associated with the connection, as defined in {{IEEE80211}}.
 
 While not uniquely associated with a single IEEE 802.11 connection, {{intro}} describes
@@ -358,7 +364,7 @@ MAXSPEED         =  (DIGIT / (NZDIGIT DIGIT) / (NZDIGIT DIGIT DIGIT) /
             ; SS  = number of spatial streams
             ; SYM = symbol interval (micro-seconds)
             ; GD  = guard interval (micro-seconds), the shortest
-            ;       guard interval defined by the amendment amendment.
+            ;       guard interval defined by the amendment.
 
 WIFIAMENDMENT    =  "802.11" AMENDMENT
 
@@ -414,8 +420,8 @@ VARIANT          =  "LIN" / "EXP"
             ; LIN = linear (arithmetic mean) average calculation
             ; EXP = exponential weighted average calculation
 
-WINDOW           =  (DIGIT / (NZDIGIT DIGIT) / (NZDIGIT DIGIT DIGIT)
-                    / (NZDIGIT DIGIT DIGIT DIGIT) ) TIMEUNIT
+WINDOW           =  (DIGIT / (NZDIGIT DIGIT) / (NZDIGIT DIGIT DIGIT) )
+                    TIMEUNIT
             ; The time window over which the algorithm operates,
             ; measured in units of TIMEUNIT
 
@@ -423,7 +429,8 @@ WEIGHT           =  NZDIGIT
             ; The weighting of the AVG-EXP algorithm, where the
             ; exponential weight is 2^WEIGHT
 
-SAMPLE           = (DIGIT / (NZDIGIT DIGIT) / (NZDIGIT DIGIT DIGIT) )
+SAMPLE           = (DIGIT / (NZDIGIT DIGIT) / (NZDIGIT DIGIT DIGIT) /
+                   (NZDIGIT DIGIT DIGIT DIGIT) )
             ; The sample period in milliseconds used in the
             ; exponential moving average
 
@@ -600,6 +607,8 @@ links (value is the aggregate across links), added optional link-id to Global-OC
 ANBF as well as examples, fixed modulation rate range to 1-12 in ABNF,
 clarified description of guard interval values, updated RATE ABNF to allow >
 9999 Mbps, and updated WINDOW ABNF to allow > 999 seconds
+*  02 - Correcting wrong fix applied to WINDOW and not SAMPLE in draft-01.
+Updating Sri's contact details.
 
 
 # Acknowledgements {#Acknowledgements}
